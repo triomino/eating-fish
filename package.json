@@ -1,0 +1,13 @@
+{
+  "name": "eating-fish",
+  "version": "1.0.0",
+  "description": "web games",
+  "main": "index.js",
+  "repository": "git@github.com:triomino/eating-fish.git",
+  "author": "Zhang Yuan <596952403@qq.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-react": "^7.12.4"
+  }
+}
