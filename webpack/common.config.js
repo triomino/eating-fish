@@ -11,7 +11,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
-    modules: [path.resolve(root, 'src'), path.resolve(root, 'src', 'beginner'), path.resolve(root, 'node_modules')],
+    modules: [
+      path.resolve(root, 'src'),
+      path.resolve(root, 'src', 'beginner'),
+      path.resolve(root, 'node_modules')
+    ],
   },
   module: {
     rules: [

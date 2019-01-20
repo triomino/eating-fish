@@ -32,9 +32,14 @@
     "semi": [
       "error",
       "never"
+    ],
+    "max-len": [
+      "error",
+      80
     ]
   },
   "globals": {
-    "document": true
+    "document": true,
+    "window": true
   }
 }
