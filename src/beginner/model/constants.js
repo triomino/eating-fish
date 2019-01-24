@@ -6,7 +6,7 @@ export const canvasArea = {
 const mapWidth = 18000
 const mapHeight = 15000
 
-const catCenter = {x: 100, y: 14900}
+const catCenter = {x: 100, y: 100}
 const dogCenter = {x: mapWidth-catCenter.x, y: mapHeight-catCenter.y}
 const distributeDistance = 40
 const distribution = [

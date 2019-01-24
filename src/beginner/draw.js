@@ -7,15 +7,19 @@ function draw(game) {
 }
 
 function drawState(ctx, state) {
+  drawPlayers(ctx, state.players)
   drawPlayer(ctx, state.player)
-  drawFriendly(ctx, state.friendly)
 }
 
 function drawPlayer(ctx, player) {
-  ctx = Object.assign(ctx, player.style)
+  if (player.style) {
+    ctx = Object.assign(ctx, player.style)
+  }
 
-  const center = viewWindow.mapPoint(player.pos)
-  const radius = viewWindow.mapLength(player.radius)
+  console.log('draw')
+  console.log(player)
+  const center = viewWindow.mapPointFromRealToView(player.pos)
+  const radius = viewWindow.mapLength(player.radius || 15)
 
   ctx.beginPath()
   ctx.arc(center.x, center.y, radius, 0, 2*Math.PI, false)
@@ -23,8 +27,12 @@ function drawPlayer(ctx, player) {
   ctx.stroke()
 }
 
-function drawFriendly(ctx, friendly) {
-  friendly.forEach(friend => drawPlayer(ctx, friend))
+function drawPlayers(ctx, players) {
+  for (const id in players) {
+    if (id.toString() !== state.player.id.toString()) {
+      drawPlayer(ctx, state.players[id])
+    }
+  }
 }
 
 export default draw

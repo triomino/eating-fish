@@ -1,4 +1,4 @@
-import { mousePos, keys, state, viewWindow } from 'model/state'
+import { mousePos, keys, state, viewWindow, canvas } from 'model/state'
 import {zeroThreshold} from 'model/constants'
 
 export function listenMouseMove(e) {
@@ -9,10 +9,11 @@ export function listenMouseMove(e) {
 
 export function listenClick(e) {
   e.preventDefault()
-  mousePos.x = e.clientX
-  mousePos.y = e.clientY
+  const rect = canvas.getBoundingClientRect()
+  mousePos.x = e.clientX - rect.left
+  mousePos.y = e.clientY - rect.top
   state.player.moving = true
-  state.player.movingTo = viewWindow.reverseMapPoint({
+  state.player.movingTo = viewWindow.mapPointsFromViewToReal({
     x: mousePos.x, y: mousePos.y
   })
 }
@@ -27,11 +28,38 @@ export function listenKeyUp(e) {
   keys[e.key] = false
 }
 
-export function updateState() {
-  updatePlayer(state.player)
+export function selfUpdateState() {
+  selfUpdatePlayer(state.player)
 }
 
-function updatePlayer(player) {
+export function forceUpdateState(data) {
+  const newState = JSON.parse(data)
+  if (newState.players) {
+    for (const id in newState.players) {
+      state.players[id] = state.players[id] ? {
+        ...state.players[id],
+        pos : {
+          ...newState.players[id],
+        }
+      } : {pos : {...newState.players[id]}}
+    }
+  }
+
+  if (newState.players[newState?.me]) {
+    state.player = {
+      ...state.player,
+      pos :{
+        ...state.player.pos,
+        ...newState.players[newState?.me],
+      },
+      id: newState?.me
+    }
+  }
+
+  document.getElementById('debug').innerText = JSON.stringify(state)
+}
+
+function selfUpdatePlayer(player) {
   if (player.moving) {
     const diff = {
       x: player.movingTo.x - player.pos.x,

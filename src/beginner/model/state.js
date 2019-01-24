@@ -5,9 +5,7 @@ export const state = {
   player: new player('cat', {
     fillStyle: 'skyblue', lineWidth: 2, strokeStyle: 'black'
   }),
-  friendly: [new player('cat', {
-    fillStyle: 'green', lineWidth: 2, strokeStyle: 'black'
-  })],
+  players: {},
 }
 
 export const mousePos = {
@@ -20,18 +18,20 @@ export const mousePos = {
   }
 }
 
+export const canvas = document.createElement('canvas')
+
 export const keys = []
 
 export const viewWindow = {
-  center: mapArea.birthPoint['cat'][0],
+  center: {x:100, y:100},
   scale: 1,
-  mapPoint: pos => ({
+  mapPointFromRealToView: pos => ({
     x: (pos.x - viewWindow.center.x) * viewWindow.scale + canvasArea.width / 2,
-    y: (pos.y - viewWindow.center.y) * viewWindow.scale + canvasArea.height / 2
+    y: (viewWindow.center.y - pos.y) * viewWindow.scale + canvasArea.height / 2
   }),
   mapLength: length => length * viewWindow.scale,
-  reverseMapPoint: pos => ({
+  mapPointsFromViewToReal: pos => ({
     x: (pos.x - canvasArea.width / 2) / viewWindow.scale + viewWindow.center.x,
-    y: (pos.y - canvasArea.height / 2) / viewWindow.scale + viewWindow.center.y,
+    y: (canvasArea.height / 2 - pos.y) / viewWindow.scale + viewWindow.center.y,
   })
 }
