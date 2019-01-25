@@ -1,5 +1,6 @@
 import { mousePos, keys, state, viewWindow, canvas } from 'model/state'
 import {zeroThreshold} from 'model/constants'
+import {webSocket} from './websocket'
 
 export function listenMouseMove(e) {
   e.preventDefault()
@@ -16,6 +17,7 @@ export function listenClick(e) {
   state.player.movingTo = viewWindow.mapPointsFromViewToReal({
     x: mousePos.x, y: mousePos.y
   })
+  selfUpdateState()
 }
 
 export function listenKeyDown(e) {
@@ -30,6 +32,15 @@ export function listenKeyUp(e) {
 
 export function selfUpdateState() {
   selfUpdatePlayer(state.player)
+  webSocket.send(JSON.stringify(state.player))
+}
+
+function updateView() {
+  // TODO: naturally following
+  if (viewWindow?.center) {
+    viewWindow.center.x = state.player.pos.x
+    viewWindow.center.y = state.player.pos.y
+  }
 }
 
 export function forceUpdateState(data) {
@@ -56,6 +67,7 @@ export function forceUpdateState(data) {
     }
   }
 
+  updateView()
   document.getElementById('debug').innerText = JSON.stringify(state)
 }
 

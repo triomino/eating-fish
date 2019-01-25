@@ -1,10 +1,22 @@
 export const canvasArea = {
-  width: 700,
+  width: 800,
   height: 500,
 }
 
-const mapWidth = 18000
-const mapHeight = 15000
+export const miniMap = {
+  left: 3,
+  top: 3,
+  width: 160,
+  height: 100,
+  mapPointFromMapToMiniCanvas: (x, y) => ({
+    x: x / mapArea.width * miniMap.width + miniMap.left,
+    y: -y / mapArea.height * miniMap.height + miniMap.top + miniMap.height,
+  }),
+  mapLengthFromMapToMini: length => length / mapArea.height * miniMap.height,
+}
+
+const mapWidth = 4000
+const mapHeight = 2500
 
 const catCenter = {x: 100, y: 100}
 const dogCenter = {x: mapWidth-catCenter.x, y: mapHeight-catCenter.y}
