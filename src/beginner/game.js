@@ -15,7 +15,7 @@ function startGame() {
   window.addEventListener('keydown', listenKeyDown, false)
   window.addEventListener('keyup', listenKeyUp, false)
 
-  game.webSocket = new WebSocket('ws://localhost:8080/api/ws/beginner')
+  game.webSocket = new WebSocket('ws://games.zhangyuango.art:8080/api/ws/beginner')
   game.webSocket.addEventListener('message', function (event) {
     forceUpdateState(event.data)
   })
