@@ -13,7 +13,6 @@ module.exports = {
     extensions: ['.js'],
     modules: [
       path.resolve(root, 'src'),
-      path.resolve(root, 'src', 'beginner'),
       path.resolve(root, 'node_modules')
     ],
   },
@@ -29,4 +28,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({template: './src/index.html'})
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  }
 }

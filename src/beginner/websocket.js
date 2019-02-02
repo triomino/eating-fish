@@ -1,3 +1,3 @@
 export const webSocket = new WebSocket(
-  'ws://games.zhangyuango.cn:8080/api/ws/beginner'
+  'ws://47.112.9.151:8080/api/ws/beginner'
 )

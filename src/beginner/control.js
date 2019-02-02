@@ -1,5 +1,5 @@
-import { mousePos, keys, state, viewWindow, canvas } from 'model/state'
-import {zeroThreshold} from 'model/constants'
+import { mousePos, keys, state, viewWindow } from 'beginner/model/state'
+import {zeroThreshold} from 'beginner/model/constants'
 import {webSocket} from './websocket'
 
 export function listenMouseMove(e) {

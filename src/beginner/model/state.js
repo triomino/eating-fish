@@ -1,5 +1,6 @@
-import { player } from 'model/model'
-import { canvasArea } from 'model/constants'
+import { player } from 'beginner/model/model'
+import { canvasArea } from 'beginner/model/constants'
+import { newCanvas } from 'common/canvas'
 
 export const state = {
   player: new player('cat', {
@@ -14,7 +15,7 @@ export const mousePos = {
   click: false,
 }
 
-export const canvas = document.createElement('canvas')
+export const canvas = newCanvas()
 
 export const keys = []
 

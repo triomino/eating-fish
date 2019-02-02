@@ -1,4 +1,4 @@
-import { mapArea, playerTemplate } from 'model/constants'
+import { mapArea, playerTemplate } from 'beginner/model/constants'
 
 export class player {
   static count = 0

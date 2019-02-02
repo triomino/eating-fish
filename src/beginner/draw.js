@@ -1,5 +1,5 @@
-import { state, viewWindow } from 'model/state'
-import { canvasArea, mapArea, miniMap } from './model/constants'
+import { state, viewWindow } from 'beginner/model/state'
+import { canvasArea, miniMap } from 'beginner/model/constants'
 
 function draw(game) {
   game.clear()

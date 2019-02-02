@@ -41,6 +41,7 @@
   "globals": {
     "document": true,
     "window": true,
-    "WebSocket": true
+    "WebSocket": true,
+    "requestAnimationFrame": true
   }
 }

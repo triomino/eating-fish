@@ -1,15 +1,17 @@
-import draw from 'draw'
+import draw from 'beginner/draw'
 import {
   listenMouseMove, listenKeyDown,
   listenKeyUp, listenClick, forceUpdateState
-} from 'control'
+} from 'beginner/control'
 import {
   canvasArea
-} from 'model/constants'
-import { webSocket } from 'websocket'
-import { canvas } from './model/state'
+} from 'beginner/model/constants'
+import { webSocket } from './websocket'
+import { newCanvas } from 'common/canvas'
 
-function startGame() {
+const canvas = newCanvas()
+
+function beginnerStart() {
   game.start()
   canvas.addEventListener('mousemove', listenMouseMove, false)
   canvas.addEventListener('click', listenClick, false)
@@ -36,4 +38,4 @@ const game = {
   },
 }
 
-export default startGame
+export default beginnerStart
