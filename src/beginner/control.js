@@ -1,4 +1,4 @@
-import { mousePos, keys, state, viewWindow } from 'beginner/model/state'
+import { mousePos, keys, state, viewWindow, canvas } from 'beginner/model/state'
 import {zeroThreshold} from 'beginner/model/constants'
 import {webSocket} from './websocket'
 
