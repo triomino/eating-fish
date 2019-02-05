@@ -7,7 +7,7 @@ export const camera = new PerspectiveCamera(
   75, canvasArea.width/canvasArea.height, 0.1, 1000
 )
 
-export const renderer = new WebGLRenderer()
+export const renderer = new WebGLRenderer({antialias: true})
 renderer.setSize( canvasArea.width, canvasArea.height)
 
 export const keys = {}

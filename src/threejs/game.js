@@ -1,7 +1,7 @@
 import {
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial, Vector3,
+  BoxBufferGeometry,
+  Mesh, DirectionalLight,
+  MeshBasicMaterial, MeshPhongMaterial, Vector3,
 } from 'three'
 import { camera, scene, renderer, keys } from 'threejs/model/state'
 import { listenKeyDown, listenKeyUp, listenMouseMove } from 'threejs/control'
@@ -22,12 +22,25 @@ const game = {
 
     document.body.replaceChild(canvas , document.getElementById('canvas'))
 
-    const geometry = new BoxGeometry( 1, 1, 1 )
-    const material = new MeshBasicMaterial( { color: 0x00ff00 } )
+    const geometry = new BoxBufferGeometry( 1, 1, 1 )
+    const material = new MeshPhongMaterial( { color: 0x00ff00 } )
     const cube = new Mesh( geometry, material )
+
+    const floorGeometry = new BoxBufferGeometry( 100, 1, 100 )
+    const floorMeterial = new MeshPhongMaterial( { color: 0x156289, specular: 0x072534 } )
+    const floor = new Mesh( floorGeometry, floorMeterial )
+    floor.position.y = -3
+
+    const light = new DirectionalLight( 0xffffff, 1 )
+    light.position.set(1, 1, 1)
+
     scene.add( cube )
+    scene.add( floor )
+    scene.add( light )
 
     camera.position.x = -5
+    camera.yaw = 0
+    camera.pitch = 0
     camera.front = new Vector3(1, 0, 0)
     camera.movingSpeed = 0.2
 
@@ -35,7 +48,7 @@ const game = {
       requestAnimationFrame( animate )
 
       game.updateState()
-      document.getElementById('debug').innerText=JSON.stringify(camera.front)
+      document.getElementById('debug').innerText=JSON.stringify({ yaw: camera.yaw, pitch: camera.pitch })
       renderer.render( scene, camera )
     }
 
@@ -56,5 +69,5 @@ const directionOfKeys = {
   'a': () => camera.front.clone().cross(camera.up).negate(),
   's': () => camera.front.clone().negate(),
   'd': () => camera.front.clone().cross(camera.up),
-  'Escape': () => render.domElement.exitPointerLock()
+  'Escape': () => renderer.domElement.exitPointerLock()
 }

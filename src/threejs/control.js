@@ -1,6 +1,6 @@
 import { Euler } from 'three'
 import { camera, keys } from 'threejs/model/state'
-import { mouseSensity, eulersOfMovement } from 'threejs/model/constants'
+import { mouseSensity, eulersOfMovement, PI, MAX_PITCH } from 'threejs/model/constants'
 
 export function listenKeyDown(e) {
   e.preventDefault()
@@ -15,19 +15,29 @@ export function listenKeyUp(e) {
 
 export function listenMouseMove(e) {
   e.preventDefault()
-  const key = e.movementX.toString()
-  if (!eulersOfMovement[key]) {
-    eulersOfMovement[key] = new Euler(0, -e.movementX * mouseSensity)
+
+  let yaw = camera.yaw - e.movementX * mouseSensity
+  if (yaw > PI) {
+    yaw -= PI * 2
+  }
+  else if (yaw  < -PI) {
+    yaw += PI * 2
+    console.log(yaw)
   }
 
-  if (e.movementX !== 0) {
-    camera.front.applyEuler(eulersOfMovement[key]).applyAxisAngle(
-      camera.front.clone().cross(camera.up), -e.movementY * mouseSensity
-    )
+  let pitch = camera.pitch - e.movementY * mouseSensity
+  if (pitch > MAX_PITCH) {
+    pitch = MAX_PITCH
   }
-  else {
-    camera.front.applyAxisAngle(
-      camera.front.clone().cross(camera.up), -e.movementY * mouseSensity
-    )
+  else if (pitch < -MAX_PITCH) {
+    pitch = -MAX_PITCH
   }
+
+  camera.front.set(1, 0, 0)
+  rotation.set(0, yaw, pitch)
+  camera.front.applyEuler(rotation)
+  camera.yaw = yaw
+  camera.pitch = pitch
 }
+
+const rotation = new Euler(1, 0, 0)
