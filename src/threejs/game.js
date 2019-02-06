@@ -1,7 +1,7 @@
 import {
-  BoxBufferGeometry,
+  BoxBufferGeometry, Color,
   Mesh, DirectionalLight,
-  MeshBasicMaterial, MeshPhongMaterial, Vector3,
+  MeshPhongMaterial, Vector3, MeshLambertMaterial,
 } from 'three'
 import { camera, scene, renderer, keys } from 'threejs/model/state'
 import { listenKeyDown, listenKeyUp, listenMouseMove } from 'threejs/control'
@@ -23,17 +23,22 @@ const game = {
     document.body.replaceChild(canvas , document.getElementById('canvas'))
 
     const geometry = new BoxBufferGeometry( 1, 1, 1 )
-    const material = new MeshPhongMaterial( { color: 0x00ff00 } )
+    const material = new MeshPhongMaterial( {
+      color: 0x00ff00, specular: 0xffffff
+    } )
     const cube = new Mesh( geometry, material )
 
     const floorGeometry = new BoxBufferGeometry( 100, 1, 100 )
-    const floorMeterial = new MeshPhongMaterial( { color: 0x156289, specular: 0x072534 } )
-    const floor = new Mesh( floorGeometry, floorMeterial )
+    const floorMaterial = new MeshLambertMaterial( {
+      color: 0x156289, emissive: 0x072534
+    } )
+    const floor = new Mesh( floorGeometry, floorMaterial )
     floor.position.y = -3
 
     const light = new DirectionalLight( 0xffffff, 1 )
     light.position.set(1, 1, 1)
 
+    scene.background = new Color(0xffffff)
     scene.add( cube )
     scene.add( floor )
     scene.add( light )
@@ -48,7 +53,9 @@ const game = {
       requestAnimationFrame( animate )
 
       game.updateState()
-      document.getElementById('debug').innerText=JSON.stringify({ yaw: camera.yaw, pitch: camera.pitch })
+      document.getElementById('debug').innerText=JSON.stringify({
+        yaw: camera.yaw, pitch: camera.pitch
+      })
       renderer.render( scene, camera )
     }
 
